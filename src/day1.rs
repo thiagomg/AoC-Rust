@@ -10,6 +10,10 @@ pub fn run() -> Result<(), std::io::Error> {
         println!("Result = {} * {} = {}", n1, n2, n1*n2);
     }
 
+    if let Some((n1, n2)) = find_functional(&numbers, 2020) {
+        println!("Result = {} * {} = {}", n1, n2, n1*n2);
+    }
+
     if let Some((n1, n2)) = find_optimized(&numbers, 2020) {
         println!("Result = {} * {} = {}", n1, n2, n1*n2);
     }
@@ -31,6 +35,18 @@ fn find_optimized(numbers: &Vec<u32>, sum: u32) -> Option<(u32, u32)> {
         }
     }
     None
+}
+
+fn find_functional(numbers: &Vec<u32>, sum: u32) -> Option<(u32, u32)> {
+    numbers.iter().map(|x| {
+        let tuples : Vec<(u32, u32)> = numbers.iter()
+            .filter(|y| *x + **y == sum)
+            .map(|y| (*x, *y))
+            .collect();
+        tuples
+    })
+    .flat_map(|x| x)
+    .take(1).next()
 }
 
 fn find_brute_force(numbers: &Vec<u32>, sum: u32) -> Option<(u32, u32)> {
