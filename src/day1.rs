@@ -3,7 +3,7 @@ use std::io::{BufRead, BufReader};
 use std::collections::HashSet;
 use std::iter::FromIterator;
 
-fn main() -> Result<(), std::io::Error> {
+pub fn run() -> Result<(), std::io::Error> {
     let numbers: Vec<u32> = read_file()?;
 
     if let Some((n1, n2)) = find_brute_force(&numbers, 2020) {
@@ -46,7 +46,7 @@ fn find_brute_force(numbers: &Vec<u32>, sum: u32) -> Option<(u32, u32)> {
 
 // FIXME: I could collect straight to a hash set. Need to figure out generics
 fn read_file() -> Result<Vec<u32>, std::io::Error> {
-    let file = File::open("input")?;
+    let file = File::open("data/day1/input")?;
     let buf = BufReader::new(file);
     let lines = buf.lines()
         .filter(|l| l.is_ok())
