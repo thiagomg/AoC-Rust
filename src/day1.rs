@@ -14,6 +14,10 @@ pub fn run() -> Result<(), std::io::Error> {
         println!("Result = {} * {} = {}", n1, n2, n1*n2);
     }
 
+    if let Some((n1, n2, n3)) = find_brute_force_3(&numbers, 2020) {
+        println!("Result = {} * {} * {} = {}", n1, n2, n3, n1*n2*n3);
+    }
+
     Ok(())
 }
 
@@ -38,6 +42,23 @@ fn find_brute_force(numbers: &Vec<u32>, sum: u32) -> Option<(u32, u32)> {
             }
             if number + other_number == sum {
                 return Some((*number, *other_number));
+            }
+        }
+    }
+    None
+}
+
+fn find_brute_force_3(numbers: &Vec<u32>, sum: u32) -> Option<(u32, u32, u32)> {
+    // Brute force
+    for (first_pos, first_num) in numbers.iter().enumerate() {
+        for (second_pos, second_num) in numbers.iter().enumerate() {
+            for (third_pos, third_num) in numbers.iter().enumerate() {
+                if first_pos == second_pos || first_pos == third_pos || second_pos == third_pos {
+                    continue;
+                }
+                if first_num + second_num + third_num == sum {
+                    return Some((*first_num, *second_num, *third_num));
+                }
             }
         }
     }
